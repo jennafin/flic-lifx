@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 ################################################################################
 #
@@ -59,6 +60,8 @@ fi
 
 # Need to sleep here before starting up the server process so it isn't killed by commands above
 sleep 3
+
+pushd /home/pi/Documents/flic-lifx
 
 # Start server in separate terminal - supports ubuntu for testing purposes
 if [[ $(arch) == "x86_64" ]]; then
