@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 ################################################################################
 #
@@ -44,13 +43,15 @@ while getopts "hc" opt; do
     esac
 done
 
-# Kill any running server processes
-if ps aux | grep '[f]licd' &> /dev/null; then
+# Kill any running server or client processes
+found_server=$(ps aux | grep '[f]licd')
+found_client=$(ps aux | grep '[c]lientlib/client.py')
+
+if [ "$found_server" ]; then
     sudo kill $(ps aux | grep '[f]licd' | awk '{print $2}'); 
 fi
 
-# Kill any running client processes
-if ps aux | grep '[l]ifxClient' &> /dev/null; then
+if [ "$found_client" ]; then
     sudo kill $(ps aux | grep '[c]lientlib/client.py' | awk '{print $2}');
 fi
 
