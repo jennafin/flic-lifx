@@ -7,11 +7,7 @@ fi
 
 # Kill any running client processes
 if ps aux | grep '[l]ifxClient' &> /dev/null; then
-    sudo kill $(ps aux | grep '[l]ifxClient' | awk '{print $2}');
-fi
-
-if ps aux | grep '[s]impleclient' &> /dev/null; then
-    sudo kill $(ps aux | grep '[s]impleclient' | awk '{print $2}');
+    sudo kill $(ps aux | grep '[c]lientlib/client.py' | awk '{print $2}');
 fi
 
 # Need to sleep here before starting up the server process so it isn't killed by commands above
