@@ -7,6 +7,7 @@ from enum import Enum
 token = os.environ['TOKEN']
 headers = {
     "Authorization": "Bearer %s" % token,
+    "Content-Type": "application/json",
 }    
 
 class LIFXGroup(object):
@@ -167,10 +168,9 @@ class LIFXLightService(object):
         """Sends a request to the LIFX Api to toggle all matches for the selector.
         """
         if duration is None:
-            response = requests.post(self.endpoint_base_url + "/lights/" + selector + "/toggle", headers=headers)
+            response = requests.post(self.endpoint_base_url + "lights/" + selector + "/toggle", headers=headers)
         else:
-            response = requests.post(self.endpoint_base_url + "/lights/" + selector + "/toggle", headers=headers, data={'duration': duration})
-        
+            response = requests.post(self.endpoint_base_url + "lights/" + selector + "/toggle", headers=headers, data={'duration': duration})
        
     def set_state(self, state, selector):
         """Sends a request to the LIFX Api to set a state matching a selector.
@@ -184,7 +184,7 @@ class LIFXLightService(object):
             body['brightness'] = state.brightness
         if state.duration is not None:
             body['duration'] = state.duration
-        response = requests.put(self.endpoint_base_url + '/lights/' + selector + '/state', data=body, headers=headers)
+        response = requests.put(self.endpoint_base_url + 'lights/' + selector + '/state', data=body, headers=headers)
         
     def set_states(self, states, default):
         """Sends a request to the LIFX Api to set multiple states matching selectors.
