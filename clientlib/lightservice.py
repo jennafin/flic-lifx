@@ -184,7 +184,7 @@ class LIFXLightService(object):
             body['brightness'] = state.brightness
         if state.duration is not None:
             body['duration'] = state.duration
-        response = requests.put(self.endpoint_base_url + 'lights/' + selector + '/state', data=body, headers=headers)
+        response = requests.put(self.endpoint_base_url + 'lights/' + selector + '/state', json=body, headers=headers)
         
     def set_states(self, states, default):
         """Sends a request to the LIFX Api to set multiple states matching selectors.
