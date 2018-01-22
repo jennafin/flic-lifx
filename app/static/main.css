@@ -1,0 +1,15 @@
+.light-button {
+    border-radius: 50%;
+    background-color: #42a4f4;
+    border-color: black;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    width: 100px;
+    height: 100px;
+    outline: none;
+}
