@@ -181,9 +181,10 @@ class LIFXLightService(object):
         if state.color is not None:
             body['color'] = state.color
         if state.brightness is not None:
-            body['brightness'] = state.brightness
+            body['brightness'] = float(state.brightness)
         if state.duration is not None:
-            body['duration'] = state.duration
+            body['duration'] = float(state.duration)
+            
         response = requests.put(self.endpoint_base_url + 'lights/' + selector + '/state', json=body, headers=headers)
         
     def set_states(self, states, default):
@@ -197,9 +198,9 @@ class LIFXLightService(object):
             if state.color is not None:
                 state_to_send['color'] = state.color
             if state.brightness is not None:
-                state_to_send['brightness'] = state.brightness
+                state_to_send['brightness'] = float(state.brightness)
             if state.duration is not None:
-                state_to_send['duration'] = state.duration
+                state_to_send['duration'] = float(state.duration)
             if state.selector is not None:
                 state_to_send['selector'] = state.selector
             states_to_send.append(state_to_send)
@@ -211,11 +212,11 @@ class LIFXLightService(object):
             if default.color is not None:
                 defaults['color'] = default.color
             if default.brightness is not None:
-                defaults['brightness'] = default.brightness
+                defaults['brightness'] = float(default.brightness)
             if default.duration is not None:
-                defaults['duration'] = default.duration
+                defaults['duration'] = float(default.duration)
         body = { "states": states_to_send, "defaults": defaults}
-        response = requests.put(self.endpoint_base_url + 'lights/states', data=json.dumps(body), headers=headers)
+        response = requests.put(self.endpoint_base_url + 'lights/states', json=body, headers=headers)
         
         
     def activate_scene(self, uuid, duration):
