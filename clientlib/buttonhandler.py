@@ -1,6 +1,6 @@
 import sys
 import fliclib
-import config_file_parser
+#import config_file_parser
 from enum import Enum
 
 class ConfigButtonHandler(object):
@@ -66,14 +66,10 @@ class ButtonHandler(object):
         Button = 'BUTTON'
         State = 'STATE'
     
-    def __init__(self, light_data):
+    def __init__(self):
         """Inits ButtonHandler by starting up a FlicClient to listen for button presses. Also creates a dictionary mapping click types to functions to handle them.
-        
-        Args:
-            light_data: light information retrieved from the lightservice.
         """
         self.client = fliclib.FlicClient("localhost")
-        self.data = light_data
         self.click_functions = {
             'ClickType.ButtonSingleClick': self._on_single_click,
             'ClickType.ButtonDoubleClick': self._on_double_click,
@@ -106,8 +102,9 @@ class ButtonHandler(object):
         """
         # Execute the appropriate click function with the button address as the argument
         if not was_queued:
-            self.click_functions[str(click_type)](channel.bd_addr)
-            
+            #self.click_functions[str(click_type)](channel.bd_addr)
+            print("Button click!")
+
     def _on_single_click(self, button_addr):
         """Function to handle single clicks for a certain button.
         
@@ -159,7 +156,7 @@ class ButtonHandler(object):
             bd_addr: button address.
         """
         cc = fliclib.ButtonConnectionChannel(bd_addr)
-        cc.on_connection_status_changed = self._on_connection_status_changed
+        #cc.on_connection_status_changed = self._on_connection_status_changed
         cc.on_button_single_or_double_click_or_hold = self._on_button_single_or_double_click_or_hold
         self.client.add_connection_channel(cc)
         
@@ -172,7 +169,7 @@ class ButtonHandler(object):
         for bd_addr in items["bd_addr_of_verified_buttons"]:
             self._got_button(bd_addr)
     
-    def _load_config(self):
+    def _load_config(self, light_service):
         """Loads the button config from the config file. Essentially maps button click types to light actions.
         """
         config = config_file_parser.ConfigFileParser()
@@ -184,8 +181,9 @@ class ButtonHandler(object):
     def start(self, light_service):
         """Loads the button config, initializes the ButtonConnectionChannels, and starts listening for button events.
         """
-        self._load_config()
+        
         self.light_service = light_service
+        #self._load_config(light_service)
             
         # Get button information
         self.client.get_info(self._got_info)
@@ -193,7 +191,7 @@ class ButtonHandler(object):
         
         # Handle button events
         print("\nClient is now listening for button events. Press a Flic button to test it out!")
-        self.client.handle_events()
+        #self.client.handle_events()
 
 
     

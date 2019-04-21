@@ -11,7 +11,7 @@
 # 5. Wait 15 seconds for user to input credentials (only really required for Ubuntu I think)
 #           If the user fails to enter credentials within the 15 second timeframe this script
 #           will exit.. you'll have to start it up again and be faster next time ;)
-# 6. Start up client process with LIFX light type - Hue support to come later
+# 6. Start up client process
 #
 ################################################################################
 
@@ -88,14 +88,9 @@ do
   j=$[$j+1]
 done
 
-# Start up light control client using voltos LIFXToken bundle.
-# Make sure you have set TOKEN in your voltos bundle to 
-# your LIFX cloud token from cloud.lifx.com. 
-# Instructions for using voltos found at voltos.io
-voltos use LIFXToken
-
+# Start up light control client
 if $config_mode_on; then
-    voltos run "python3 clientlib/client.py -c LIFX"
+    python3 clientlib/client.py -c
 else
-    voltos run "python3 clientlib/client.py LIFX"
+    python3 clientlib/client.py
 fi
